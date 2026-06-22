@@ -1,0 +1,15 @@
+--High Risk emergency patient finder; 
+
+SELECT Name, Medical_Condition, Room_Number
+FROM healthcare_dataset
+WHERE Test_Results = 'Abnormal' AND Admission_Type = 'Emergency'
+ORDER BY Name;
+
+--Hospital Medication Check, Prescription counts to aggregate inventory needs;
+
+SELECT Medication, count(*) AS "Total_Prescribed"
+FROM healthcare_dataset
+GROUP BY Medication
+ORDER BY count(*) DESC; 
+
+--
