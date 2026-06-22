@@ -1,15 +1,35 @@
---High Risk emergency patient finder; 
+--High Risk emergency patient finder: 
 
 SELECT Name, Medical_Condition, Room_Number
 FROM healthcare_dataset
 WHERE Test_Results = 'Abnormal' AND Admission_Type = 'Emergency'
 ORDER BY Name;
 
---Hospital Medication Check, Prescription counts to aggregate inventory needs;
+--Hospital Medication Check, Prescription counts to aggregate inventory needs:
 
 SELECT Medication, count(*) AS "Total_Prescribed"
 FROM healthcare_dataset
 GROUP BY Medication
 ORDER BY count(*) DESC; 
+
+--Average Bill Amount, From highest to lowest per Medical Condition:
+
+SELECT Medical_Condition, ROUND(AVG(billing_amount)) AS "Average_bill"
+FROM healthcare_dataset
+GROUP BY Medical_Condition
+ORDER BY ROUND(AVG(billing_amount)) DESC;
+
+--Filtering Patients Admitted in the peak of summer season (June, July): 
+
+SELECT Name, Medical_Condition, Date_of_Admission
+FROM healthcare_dataset
+WHERE Date_of_Admission LIKE '%-07-%' OR Date_of_Admission LIKE '%-06-%'
+ORDER BY Date_of_Admission DESC
+
+--Number Of Patients for every unique combination of Blood_Type And Medical_Condition:
+SELECT count(*) AS "Number_Of_Patients", Blood_Type, Medical_Condition
+FROM healthcare_dataset
+GROUP BY Medical_Condition, Blood_Type 
+ORDER BY count(*) DESC;
 
 --
